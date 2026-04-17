@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ProTube — Твой личный видеохост</title>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    
+    <title>ProTube Premium</title>
     <style>
         body { font-family: "Roboto", Arial, sans-serif; background: #0f0f0f; color: white; margin: 0; overflow: hidden; }
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 56px; background: #0f0f0f; border-bottom: 1px solid #222; position: fixed; width: 100%; top: 0; z-index: 1000; }
@@ -18,8 +22,6 @@
         .thumb-box { width: 100%; aspect-ratio: 16/9; background: #222; border-radius: 12px; overflow: hidden; }
         .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
         .v-title { font-size: 16px; margin: 10px 10px 5px; font-weight: bold; }
-        
-        /* Плеер */
         #playerModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 4000; justify-content: center; align-items: center; flex-direction: column;}
         .video-container { position: relative; width: 95%; max-width: 1100px; aspect-ratio: 16/9; background: #000; }
         iframe, video { width: 100%; height: 100%; border: none; }
@@ -29,7 +31,7 @@
 <body>
     <header>
         <div class="logo"><span>▶</span> ProTube Premium</div>
-        <button class="upload-btn" onclick="alert('Чтобы добавить видео навсегда, отредактируйте файл index.html на GitHub!')">ДОБАВИТЬ ВЕЧНОЕ</button>
+        <button class="upload-btn" onclick="location.reload()">ОБНОВИТЬ ЛЕНТУ</button>
     </header>
 
     <div class="wrapper">
@@ -51,7 +53,6 @@
     </div>
 
     <script>
-        // ТВОЯ БАЗА ВИДЕО
         const fixedVideos = [
             {
                 title: "GAYAZOV$ BROTHER$ & Filatov & Karas — ПОШЛА ЖАРА",
@@ -101,14 +102,11 @@
             const grid = document.getElementById('mainGrid');
             if (!grid) return;
             grid.innerHTML = '';
-            
             fixedVideos.forEach((data, index) => {
                 const card = document.createElement("div");
                 card.className = "video-card";
                 card.innerHTML = `
-                    <div class="thumb-box">
-                        <img src="${data.thumb}">
-                    </div>
+                    <div class="thumb-box"><img src="${data.thumb}"></div>
                     <div class="v-title">${data.title}</div>
                 `;
                 card.onclick = () => openPlayer(index);
@@ -120,12 +118,7 @@
             const data = fixedVideos[index];
             const container = document.getElementById('vContainer');
             document.getElementById('playerTitle').innerText = data.title;
-            
-            if (data.type === "youtube") {
-                container.innerHTML = `<iframe src="${data.url}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
-            } else {
-                container.innerHTML = `<video src="${data.url}" controls autoplay></video>`;
-            }
+            container.innerHTML = `<iframe src="${data.url}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
             document.getElementById('playerModal').style.display = "flex";
         }
 
@@ -134,7 +127,6 @@
             document.getElementById('playerModal').style.display = "none";
         }
 
-        // ЗАПУСК ПРИ ЗАГРУЗКЕ
         window.onload = renderAll;
     </script>
 </body>
