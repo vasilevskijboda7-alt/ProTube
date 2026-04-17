@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MyTube Ultra — Постоянный хостинг</title>
+    <title>ProTube — Твой личный видеохост</title>
     <style>
         body { font-family: "Roboto", Arial, sans-serif; background: #0f0f0f; color: white; margin: 0; overflow: hidden; }
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 20px; height: 56px; background: #0f0f0f; border-bottom: 1px solid #222; position: fixed; width: 100%; top: 0; z-index: 1000; }
@@ -18,24 +18,18 @@
         .thumb-box { width: 100%; aspect-ratio: 16/9; background: #222; border-radius: 12px; overflow: hidden; }
         .thumb-box img { width: 100%; height: 100%; object-fit: cover; }
         .v-title { font-size: 16px; margin: 10px 10px 5px; font-weight: bold; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 3000; justify-content: center; align-items: center; }
-        .modal-box { background: #212121; padding: 25px; border-radius: 12px; width: 450px; display: flex; flex-direction: column; gap: 10px; }
-        input { padding: 10px; background: #121212; border: 1px solid #333; color: white; border-radius: 5px; }
+        
+        /* Плеер */
         #playerModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 4000; justify-content: center; align-items: center; flex-direction: column;}
         .video-container { position: relative; width: 95%; max-width: 1100px; aspect-ratio: 16/9; background: #000; }
-        video, iframe { width: 100%; height: 100%; border: none; }
-        .yt-controls { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0, 0, 0, 0.9)); padding: 15px 25px; display: flex; flex-direction: column; opacity: 0; transition: opacity 0.2s; z-index: 10; }
-        .video-container:hover .yt-controls { opacity: 1; }
-        .progress-container { width: 100%; height: 4px; background: rgba(255, 255, 255, 0.2); cursor: pointer; margin-bottom: 12px; }
-        .progress-red { height: 100%; background: #ff0000; width: 0%; }
-        .buttons-row { display: flex; align-items: center; justify-content: space-between; }
-        .btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+        iframe, video { width: 100%; height: 100%; border: none; }
+        .close-btn { position: absolute; top: 20px; right: 20px; color: white; background: none; border: none; font-size: 35px; cursor: pointer; z-index: 5000; }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo"><span>▶</span> MyTube Premium</div>
-        <button class="upload-btn" id="openUploadBtn">ДОБАВИТЬ ВРЕМЕННОЕ</button>
+        <div class="logo"><span>▶</span> ProTube Premium</div>
+        <button class="upload-btn" onclick="alert('Чтобы добавить видео навсегда, отредактируйте файл index.html на GitHub!')">ДОБАВИТЬ ВЕЧНОЕ</button>
     </header>
 
     <div class="wrapper">
@@ -50,47 +44,16 @@
         </main>
     </div>
 
-    <div id="uploadModal" class="modal">
-        <div class="modal-box">
-            <h2>Тестовая загрузка</h2>
-            <input type="file" id="fileInput" accept="video/*" />
-            <input type="text" id="titleInput" placeholder="Название видео" />
-            <button class="upload-btn" id="publishBtn">ОПУБЛИКОВАТЬ (ДО ОБНОВЛЕНИЯ)</button>
-            <button onclick="document.getElementById('uploadModal').style.display='none'" style="color:gray; background:none; border:none; cursor:pointer">Отмена</button>
-        </div>
-    </div>
-
     <div id="playerModal">
-        <button onclick="closePlayer()" style="position:absolute; top:20px; right:20px; color:white; background:none; border:none; font-size:35px; cursor:pointer; z-index:5000">✕</button>
-        <div class="video-container" id="vContainer">
-            </div>
+        <button class="close-btn" onclick="closePlayer()">✕</button>
+        <div class="video-container" id="vContainer"></div>
         <h2 id="playerTitle" style="margin-top:20px; width:95%; max-width:1100px"></h2>
     </div>
 
     <script>
-        // === ВАША БАЗА ДАННЫХ (ЭТИ ВИДЕО ОСТАНУТСЯ НАВСЕГДА) ===
+        // ТВОЯ БАЗА ВИДЕО
         const fixedVideos = [
-                const fixedVideos = [
             {
-                title: "GAYAZOV$ BROTHER$ & Filatov & Karas — ПОШЛА ЖАРА",
-                thumb: "https://img.youtube.com/vi/TBRIZRD2bYE/maxresdefault.jpg",
-                url: "https://www.youtube.com/embed/TBRIZRD2bYE",
-                type: "youtube"
-            },
-            {
-                title: "NLO - Танцы",
-                thumb: "https://img.youtube.com/vi/gWHfyg_kDDg/maxresdefault.jpg",
-                url: "https://www.youtube.com/embed/gWHfyg_kDDg",
-                type: "youtube"
-            },
-            {
-                title: "Моё личное видео (Файл)",
-                thumb: "https://via.placeholder.com/600x340/222/fff?text=Video+File", 
-                url: "ССЫЛКА_НА_ПРЯМОЙ_ФАЙЛ_ВИДЕО.mp4",
-                type: "file" 
-            }
-        ];
-           {
                 title: "GAYAZOV$ BROTHER$ & Filatov & Karas — ПОШЛА ЖАРА",
                 thumb: "https://img.youtube.com/vi/TBRIZRD2bYE/maxresdefault.jpg",
                 url: "https://www.youtube.com/embed/TBRIZRD2bYE",
@@ -132,41 +95,37 @@
                 url: "https://www.youtube.com/embed/wULaGx-sl1Q",
                 type: "youtube"
             }
-        ];                        
-
-                
-    
-
-        let temporaryVideos = [];
-        let currentIndex = -1;
+        ];
 
         function renderAll() {
             const grid = document.getElementById('mainGrid');
+            if (!grid) return;
             grid.innerHTML = '';
             
-            // Объединяем вечные и временные видео
-            const allVideos = [...fixedVideos, ...temporaryVideos];
-
-            allVideos.forEach((data, index) => {
+            fixedVideos.forEach((data, index) => {
                 const card = document.createElement("div");
                 card.className = "video-card";
-                card.innerHTML = `<div class="thumb-box"><img src="${data.thumb}"></div><div class="v-title">${data.title}</div>`;
-                card.onclick = () => openPlayer(index, allVideos);
+                card.innerHTML = `
+                    <div class="thumb-box">
+                        <img src="${data.thumb}">
+                    </div>
+                    <div class="v-title">${data.title}</div>
+                `;
+                card.onclick = () => openPlayer(index);
                 grid.appendChild(card);
             });
         }
 
-        function openPlayer(index, list) {
-            const data = list[index];
+        function openPlayer(index) {
+            const data = fixedVideos[index];
             const container = document.getElementById('vContainer');
             document.getElementById('playerTitle').innerText = data.title;
             
             if (data.type === "youtube") {
                 container.innerHTML = `<iframe src="${data.url}?autoplay=1" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
             } else {
-                container.innerHTML = `<video id="vPlayer" src="${data.url}" controls autoplay></video>`;
+                container.innerHTML = `<video src="${data.url}" controls autoplay></video>`;
             }
-
             document.getElementById('playerModal').style.display = "flex";
         }
 
@@ -175,25 +134,8 @@
             document.getElementById('playerModal').style.display = "none";
         }
 
-        // Логика временной кнопки "Добавить"
-        document.getElementById("openUploadBtn").onclick = () => document.getElementById("uploadModal").style.display = "flex";
-        document.getElementById("publishBtn").onclick = () => {
-            const file = document.getElementById("fileInput").files[0];
-            const title = document.getElementById("titleInput").value;
-            if (file && title) {
-                temporaryVideos.push({
-                    title: title,
-                    thumb: "https://via.placeholder.com/300x169/333/fff?text=New+Video",
-                    url: URL.createObjectURL(file),
-                    type: "file"
-                });
-                renderAll();
-                document.getElementById("uploadModal").style.display = "none";
-            }
-        };
-
-        // Запуск
-        renderAll();
+        // ЗАПУСК ПРИ ЗАГРУЗКЕ
+        window.onload = renderAll;
     </script>
 </body>
 </html>
